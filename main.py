@@ -2,7 +2,7 @@ from pygame import *
 import sys
 
 init()
-
+mixer.init()
 pikachu_img = image.load('pikachu.png')
 pikachu_img = transform.scale(pikachu_img, (150, 150))
 
@@ -15,6 +15,18 @@ mixer.music.play(-1)
 window = display.set_mode((1280, 720))
 window.fill((151, 209, 250))
 
+# Variáveis para a nuvem
+
+nuvem_x = 700
+
+nuvem_y = 100
+
+velocidade_nuvem = 3
+
+
+
+relogio = time.Clock()
+
 
 # Programa para consguir fechar a janela
 while True:
@@ -22,7 +34,7 @@ while True:
         if ev.type == QUIT:
             quit()
             sys.exit()
-
+    window.fill((151, 209, 250))
     # desenhar a partir daqui
 
     # draw.rect(window, (cor), (x, y, largura, altura))
@@ -36,20 +48,31 @@ while True:
     draw.circle(window, (255, 242, 81), (120, 140), 50)
     draw.circle(window, (255, 242, 81), (430, 500), 5)
     draw.circle(window, (76, 153, 0), (880, 350), 100)
-    draw.circle(window, (255, 255, 255), (700, 100), 40)
-    draw.circle(window, (255, 255, 255), (750, 100), 45)
-    draw.circle(window, (255, 255, 255), (800, 100), 40)
-    draw.circle(window, (255, 255, 255), (850, 100), 45)
-    draw.circle(window, (255, 255, 255), (900, 100), 40)
-
-    # draw.polygon(window, (cor), ((ponto do triangulo), (ponto do triangulo), (ponto do triangulo)))
-    draw.polygon(window, (242, 136, 59), ((300, 350), (420, 200), (520, 350)))
 
     # desenhar uma linha
     draw.line(window, (255, 242, 81), (50, 70), (200, 200), 13)
     draw.line(window, (255, 242, 81), (200, 70), (50, 200), 13)
     draw.line(window, (255, 242, 81), (120, 40), (120, 230), 10)
     draw.line(window, (255, 242, 81), (30, 135), (220, 135), 10)
+    
+    #movimento da nuvem
+
+    nuvem_x += velocidade_nuvem
+
+    if nuvem_x > 1300: 
+
+        nuvem_x = -150 
+    
+    draw.circle(window, (255, 255, 255), (nuvem_x, nuvem_y), 40)
+    draw.circle(window, (255, 255, 255), (nuvem_x +50, nuvem_y), 45)
+    draw.circle(window, (255, 255, 255), (nuvem_x +100, nuvem_y), 40)
+    draw.circle(window, (255, 255, 255), (nuvem_x +150, nuvem_y), 45)
+    draw.circle(window, (255, 255, 255), (nuvem_x +200, nuvem_y), 40)
+
+    # draw.polygon(window, (cor), ((ponto do triangulo), (ponto do triangulo), (ponto do triangulo)))
+    draw.polygon(window, (242, 136, 59), ((300, 350), (420, 200), (520, 350)))
+
+ 
 
     # desenhar imagem
     window.blit(pikachu_img, (500, 465))
@@ -59,3 +82,4 @@ while True:
     window.blit(pikachu_text, (500, 600))
 
     display.update()
+    relogio.tick(60) 
